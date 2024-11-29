@@ -1,2 +1,3 @@
 venv/
-venv/
+model_checkpoints/*
+!model_checkpoints/.gitkeep

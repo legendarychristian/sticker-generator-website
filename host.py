@@ -1,4 +1,7 @@
 import boto3
+import numpy as np
+import cv2
+from ultralytics import YOLO
 
 # Initialize S3 client
 s3 = boto3.client('s3')
@@ -15,8 +18,3 @@ if "Contents" in response:
             continue
         print(obj['Key'])
 
-# # Download a file
-# s3.download_file(bucket_name, "your-file-name", "local-file-name")
-
-# # Upload a file
-# s3.upload_file("local-file-name", bucket_name, "your-file-name")
