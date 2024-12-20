@@ -11,14 +11,18 @@ model = YOLO("model_checkpoints/yolo11n.pt")
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    # Check if any files were uploaded
+    if not request.files:
+        return jsonify({"error": "No files found in the request"}), 400
 
-    file = request.files['file']
+    # Process the first file in the request
+    file = next(iter(request.files.values()))
 
     # Check if a file is selected
     if file.filename == '':
         return jsonify({"error": "No file selected for uploading"}), 400
 
-
+    # Return a success response
     return jsonify({"message": "File successfully uploaded", "file_path": file.filename}), 200
 
 if __name__ == '__main__':
