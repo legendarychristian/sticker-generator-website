@@ -2,19 +2,17 @@ import boto3
 import numpy as np
 import cv2
 from ultralytics import YOLO
+from fastapi import FastAPI
 
-# Initialize S3 client
-s3 = boto3.client('s3')
+app = FastAPI()
 
-# List objects in the bucket
-bucket_name = 'input-image-storage'
-directory_prefix = 'raw-images/'
+# Load your model (replace 'model.pth' with your model file)
+model = YOLO("model_checkpoints/yolo11n.pt")
 
-response = s3.list_objects_v2(Bucket = bucket_name, Prefix = directory_prefix)
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to FastAPI!"}
 
-if "Contents" in response:
-    for obj in response["Contents"]:
-        if obj['Key'].endswith('/'):
-            continue
-        print(obj['Key'])
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
 
