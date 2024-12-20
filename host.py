@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Load your model (replace 'model.pth' with your model file)
 model = YOLO("model_checkpoints/yolo11n.pt")
 
-@app.route('/upload_images', methods=['POST'])
+@app.route('/upload-images', methods=['POST'])
 def upload_multiple_files():
     # Check if any files were uploaded
     if not request.files:
@@ -20,6 +20,7 @@ def upload_multiple_files():
 
     # Process all files in the request
     for file_key, file in request.files.items():
+        # Check if a file is selected
         if file.filename == '':
             invalid_files.append({"file_key": file_key, "error": "No file selected for uploading"})
             continue
@@ -29,8 +30,12 @@ def upload_multiple_files():
             invalid_files.append({"file_key": file_key, "filename": file.filename, "error": "Invalid file type"})
             continue
 
-        # Add to uploaded files list (you can save files here if needed)
-        uploaded_files.append({"file_key": file_key, "filename": file.filename, "content_type": file.content_type})
+        # Add file info to the uploaded_files list
+        uploaded_files.append({
+            "file_key": file_key,
+            "filename": file.filename,
+            "content_type": file.content_type,
+        })
 
     # Return response
     return jsonify({
