@@ -11,9 +11,6 @@ model = YOLO("model_checkpoints/yolo11n.pt")
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    # Check if the request contains any files
-    if 'file' not in request.files:
-        return jsonify({"error": "No file part in the request"}), 400
 
     file = request.files['file']
 
