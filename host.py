@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Load your model (replace 'model.pth' with your model file)
 model = YOLO("model_checkpoints/yolo11n.pt")
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload_images', methods=['POST'])
 def upload_multiple_files():
     # Check if any files were uploaded
     if not request.files:
